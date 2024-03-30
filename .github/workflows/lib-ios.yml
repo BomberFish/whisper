@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install toolchain
-      run:  rustup target add aarch64-apple-ios-sim --toolchain nightly
+      run:  rustup target add aarch64-apple-ios-sim
     - name: Build
       run:  cargo b -r --target aarch64-apple-ios --lib
