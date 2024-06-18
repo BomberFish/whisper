@@ -1,0 +1,28 @@
+name: Build arm64 Linux
+
+on:
+  push:
+    branches: [ "arm64" ]
+  pull_request:
+    branches: [ "arm64" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install toolchain
+      run:  rustup toolchain install nightly-x86_64-unknown-linux-gnu; rustup default nightly-x86_64-unknown-linux-gnu
+    - name: Install target
+      run:  rustup target add aarch64-unknown-linux-gnu --toolchain nightly
+    - name: Build
+      run:  cargo b -r --target aarch64-unknown-linux-gnu
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Binary
+        path: target/aarch64-unknown-linux-gnu/release/whisper
